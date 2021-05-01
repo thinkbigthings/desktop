@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.thinkbigthings.desktop.controller.MainController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <Button id="workButton" fx:id="workButton" onAction="#clickWorkButton" text="Do Work...">
+
+    </Button>
+<!--    <MenuBar id="menuBar" fx:id="menuBar" HBox.hgrow="ALWAYS">-->
+    <!--    <menus>-->
+        <!--    <Menu id="fileMenu" mnemonicParsing="false" text="File">-->
+        <!--        <items>-->
+        <!--            <MenuItem id="logInMenuItem" fx:id="loginMenuItem" mnemonicParsing="false" onAction="#clickLoginMenuItem" text="Log In..."/>-->
+        <!--            <MenuItem id="logOutMenuItem" fx:id="logoutMenuItem" disable="true" mnemonicParsing="false" onAction="#clickLogoutMenuItem" text="Log Out"/>-->
+        <!--            <MenuItem id="saveMenuItem" fx:id="saveMenuItem" disable="true" mnemonicParsing="false" onAction="#clickSaveMenuItem" text="Save"/>-->
+        <!--            <MenuItem id="saveAsMenuItem" fx:id="saveAsMenuItem" disable="true" mnemonicParsing="false" onAction="#clickSaveAsMenuItem" text="Save As..."/>-->
+        <!--            <MenuItem id="saveAllMenuItem" fx:id="saveAllMenuItem" disable="true" mnemonicParsing="false" onAction="#clickSaveAllMenuItem" text="Save All"/>-->
+        <!--            <MenuItem id="quitMenuItem" fx:id="quitMenuItem" mnemonicParsing="false" onAction="#clickQuitMenuItem" text="Quit"/>-->
+        <!--        </items>-->
+        <!--    </Menu>-->
+        <!--    <Menu id="editMenu" fx:id="editMenu" mnemonicParsing="false" text="Edit">-->
+        <!--        <items>-->
+        <!--            <MenuItem id="undoMenuItem" fx:id="undoMenuItem" disable="true" mnemonicParsing="false" onAction="#clickUndoMenuItem" text="Undo"/>-->
+        <!--            <MenuItem id="preferencesMenuItem" fx:id="preferencesMenuItem" mnemonicParsing="false" onAction="#clickPreferencesMenuItem" text="Preferences..."/>-->
+        <!--        </items>-->
+        <!--    </Menu>-->
+</AnchorPane>
