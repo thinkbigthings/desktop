@@ -8,9 +8,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-// TODO do work on a background thread
-
 // TODO add fxml with menu items
+
+// TODO use design pattern for app structure https://fxdocs.github.io/docs/html5/#_application_structure
 
 // TODO Use modules https://edencoding.com/runtime-components-error/
 
