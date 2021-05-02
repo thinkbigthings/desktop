@@ -8,9 +8,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-// TODO add fxml with menu items
-
 // TODO use design pattern for app structure https://fxdocs.github.io/docs/html5/#_application_structure
+
+// TODO use property bindings
+
+// TODO try scene builder
 
 // TODO Use modules https://edencoding.com/runtime-components-error/
 

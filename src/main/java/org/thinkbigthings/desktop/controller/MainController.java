@@ -18,6 +18,15 @@ public class MainController {
     @FXML
     Button workButton;
 
+    Service<String> service;
+
+    public MainController() {
+        service = new WorkService(s -> {
+            workButton.setDisable(false);
+            System.out.println(s);
+        });
+    }
+
     public void clickWorkButton(ActionEvent actionEvent) {
 
         System.out.println("click " + actionEvent + " " + System.currentTimeMillis());
@@ -27,12 +36,12 @@ public class MainController {
             System.out.println(Thread.currentThread().getName() + " disabled runLater(): " + System.currentTimeMillis());
         });
 
-        Service<String> service = new WorkService(s -> {
-            workButton.setDisable(false);
-            System.out.println(s);
-        });
-
+        service.reset();
         service.start();
+    }
+
+    public void clickOpenMenuItem(ActionEvent actionEvent) {
+        System.out.println("Open!");
     }
 
     public static class WorkService extends Service<String> {
