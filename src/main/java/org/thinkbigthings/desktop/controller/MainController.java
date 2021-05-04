@@ -1,22 +1,21 @@
 package org.thinkbigthings.desktop.controller;
 
-import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 import java.util.function.Consumer;
 
 public class MainController {
 
     @FXML
-    AnchorPane borderPane;
+    Button workButton;
 
     @FXML
-    Button workButton;
+    Label progressLabel;
 
     Service<String> service;
 
@@ -25,16 +24,18 @@ public class MainController {
             workButton.setDisable(false);
             System.out.println(s);
         });
+
+        service.progressProperty().addListener((observable, oldValue, newValue) -> {
+            String text = newValue.doubleValue() >= 1.0 ? "" : newValue.toString();
+            progressLabel.setText(text);
+        });
     }
 
     public void clickWorkButton(ActionEvent actionEvent) {
 
-        System.out.println("click " + actionEvent + " " + System.currentTimeMillis());
+        workButton.setDisable(true);
 
-        Platform.runLater(() -> {
-            workButton.setDisable(true);
-            System.out.println(Thread.currentThread().getName() + " disabled runLater(): " + System.currentTimeMillis());
-        });
+        System.out.println("click " + actionEvent + " " + System.currentTimeMillis());
 
         service.reset();
         service.start();
@@ -46,15 +47,10 @@ public class MainController {
 
     public static class WorkService extends Service<String> {
 
-        private Consumer<String> onSuccess;
-
         public WorkService(Consumer<String> successFunction) {
-            this.onSuccess = successFunction;
-        }
 
-        @Override
-        protected void succeeded() {
-            Platform.runLater(() -> onSuccess.accept(this.getValue()));
+            // this is called by the UI thread, replaces overriding of Service.succeeded()
+            setOnSucceeded((e) -> successFunction.accept(e.getSource().getValue().toString()));
         }
 
         @Override
@@ -62,7 +58,24 @@ public class MainController {
             return new Task<>() {
                 @Override
                 protected String call() throws Exception {
-                    Thread.sleep(2000);
+
+                    // this is run in a background thread
+
+                    this.updateProgress(0.0, 1.0);
+
+                    for(long i = 0; i < 200; i++) {
+                        Thread.sleep(10);
+                        this.updateProgress(i, 200L);
+                    }
+
+                    this.updateProgress(1.0, 1.0);
+
+                    // any update to the UI from this thread would need to use Platform.runLater()
+//                    Platform.runLater(() -> {
+//                        // getProgress() can only be called from the UI thread
+//                        System.out.println(this.getProgress());
+//                    });
+
                     return "Task Complete at " + System.currentTimeMillis();
                 }
             };

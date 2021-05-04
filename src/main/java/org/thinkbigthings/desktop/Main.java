@@ -10,7 +10,7 @@ import java.io.IOException;
 
 // TODO use design pattern for app structure https://fxdocs.github.io/docs/html5/#_application_structure
 
-// TODO use property bindings
+// TODO use property bindings for other components
 
 // TODO try scene builder
 
