@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane minHeight="400.0" minWidth="600" prefHeight="400" prefWidth="600"
+<BorderPane minHeight="400" minWidth="600" prefHeight="400" prefWidth="600"
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.thinkbigthings.desktop.controller.MainController">
 
@@ -29,13 +29,16 @@
                     </children>
                 </HBox>
                 <Button id="workButton" fx:id="workButton" onAction="#clickWorkButton" text="Do Work..." />
-                <HBox VBox.vgrow="ALWAYS">
-                    <children>
-                        <Label id="progressLabel" fx:id="progressLabel" text="*" />
-                    </children>
-                </HBox>
             </children>
         </VBox>
     </top>
+    <bottom>
+        <HBox VBox.vgrow="ALWAYS">
+            <children>
+                <Region prefHeight="20.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                <ProgressBar id="progressBar" fx:id="progressBar" visible="false"/>
+            </children>
+        </HBox>
+    </bottom>
 </BorderPane>
 

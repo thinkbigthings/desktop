@@ -5,7 +5,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 
 import java.util.function.Consumer;
 
@@ -15,7 +15,7 @@ public class MainController {
     Button workButton;
 
     @FXML
-    Label progressLabel;
+    ProgressBar progressBar;
 
     Service<String> service;
 
@@ -26,8 +26,8 @@ public class MainController {
         });
 
         service.progressProperty().addListener((observable, oldValue, newValue) -> {
-            String text = newValue.doubleValue() >= 1.0 ? "" : newValue.toString();
-            progressLabel.setText(text);
+            progressBar.setProgress(newValue.doubleValue());
+            progressBar.setVisible(newValue.doubleValue() < 1.0);
         });
     }
 
