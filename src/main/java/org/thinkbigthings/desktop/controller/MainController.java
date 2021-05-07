@@ -84,9 +84,9 @@ public class MainController {
                 protected String call() throws Exception {
 
                     // this is run in a background thread
+                    // any update to the UI from this thread would need to use Platform.runLater()
 
                     this.updateProgress(0.0, 1.0);
-
 
                     long seconds = 10;
                     for(long i = 0; i < seconds; i++) {
@@ -96,7 +96,8 @@ public class MainController {
                         }
 
                         // Block the thread for a short time, but be sure
-                        // to check the InterruptedException for cancellation
+                        // to check the InterruptedException for cancellation.
+                        // Interrupt acts on blocking calls on the thread
                         try {
                             Thread.sleep(1000);
                         }
@@ -111,12 +112,6 @@ public class MainController {
                     }
 
                     this.updateProgress(1.0, 1.0);
-
-                    // any update to the UI from this thread would need to use Platform.runLater()
-//                    Platform.runLater(() -> {
-//                        // getProgress() can only be called from the UI thread
-//                        System.out.println(this.getProgress());
-//                    });
 
                     return "Task Complete at " + System.currentTimeMillis();
                 }

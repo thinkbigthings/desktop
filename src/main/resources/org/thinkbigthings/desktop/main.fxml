@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -14,7 +11,8 @@
             <children>
                 <HBox VBox.vgrow="ALWAYS">
                     <children>
-                        <MenuBar HBox.hgrow="ALWAYS">
+                        <!-- useSystemMenuBar puts the menu at the top of the screen for Macs -->
+                        <MenuBar HBox.hgrow="ALWAYS" useSystemMenuBar="true">
                             <menus>
                                 <Menu id="fileMenu" mnemonicParsing="false" text="File" >
                                     <MenuItem id="openMenuItem" fx:id="openMenuItem" mnemonicParsing="false" onAction="#clickOpenMenuItem" text="Open..."/>
