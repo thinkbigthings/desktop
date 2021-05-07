@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+// TODO restore menu at top of Mac
 
 // TODO use design pattern for app structure https://fxdocs.github.io/docs/html5/#_application_structure
 

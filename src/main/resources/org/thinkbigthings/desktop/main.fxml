@@ -9,7 +9,6 @@
 <BorderPane minHeight="400" minWidth="600" prefHeight="400" prefWidth="600"
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.thinkbigthings.desktop.controller.MainController">
-
     <top>
         <VBox BorderPane.alignment="CENTER">
             <children>
@@ -32,11 +31,19 @@
             </children>
         </VBox>
     </top>
+    <center>
+        <AnchorPane>
+            <children>
+                <TextArea></TextArea>
+            </children>
+        </AnchorPane>
+    </center>
     <bottom>
-        <HBox VBox.vgrow="ALWAYS">
+        <HBox VBox.vgrow="ALWAYS" style="-fx-padding: 0 5 10 5;">
             <children>
                 <Region prefHeight="20.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                 <ProgressBar id="progressBar" fx:id="progressBar" visible="false"/>
+                <Button id="cancelButton" fx:id="cancelButton" onAction="#clickCancelButton" text="X"></Button>
             </children>
         </HBox>
     </bottom>

@@ -17,6 +17,9 @@ public class MainController {
     @FXML
     ProgressBar progressBar;
 
+    @FXML
+    Button cancelButton;
+
     Service<String> service;
 
     public MainController() {
@@ -26,8 +29,10 @@ public class MainController {
         });
 
         service.progressProperty().addListener((observable, oldValue, newValue) -> {
+            boolean running = newValue.doubleValue() < 1.0;
             progressBar.setProgress(newValue.doubleValue());
-            progressBar.setVisible(newValue.doubleValue() < 1.0);
+            progressBar.setVisible(running);
+            cancelButton.setVisible(running);
         });
     }
 
@@ -45,17 +50,36 @@ public class MainController {
         System.out.println("Open!");
     }
 
+    public void clickCancelButton(ActionEvent actionEvent) {
+        service.cancel();
+    }
+
     public static class WorkService extends Service<String> {
 
-        public WorkService(Consumer<String> successFunction) {
+        public WorkService(Consumer<String> finishingFunction) {
 
             // this is called by the UI thread, replaces overriding of Service.succeeded()
-            setOnSucceeded((e) -> successFunction.accept(e.getSource().getValue().toString()));
+            setOnSucceeded((e) -> finishingFunction.accept(e.getSource().getValue().toString()));
+
+            setOnCancelled((e) -> finishingFunction.accept("Cancelled"));
+        }
+
+        @Override
+        protected void cancelled() {
+            super.cancelled();
+            System.out.println("Service Cancelled");
         }
 
         @Override
         protected Task<String> createTask() {
             return new Task<>() {
+
+                @Override
+                protected void cancelled() {
+                    super.cancelled();
+                    System.out.println("Task Cancelled");
+                }
+
                 @Override
                 protected String call() throws Exception {
 
@@ -63,9 +87,27 @@ public class MainController {
 
                     this.updateProgress(0.0, 1.0);
 
-                    for(long i = 0; i < 200; i++) {
-                        Thread.sleep(10);
-                        this.updateProgress(i, 200L);
+
+                    long seconds = 10;
+                    for(long i = 0; i < seconds; i++) {
+                        if(isCancelled()) {
+                            System.out.println("Cancelling...");
+                            break;
+                        }
+
+                        // Block the thread for a short time, but be sure
+                        // to check the InterruptedException for cancellation
+                        try {
+                            Thread.sleep(1000);
+                        }
+                        catch (InterruptedException interrupted) {
+                            if (isCancelled()) {
+                                System.out.println("Interrupted...");
+                                break;
+                            }
+                        }
+
+                        this.updateProgress(i, seconds);
                     }
 
                     this.updateProgress(1.0, 1.0);
