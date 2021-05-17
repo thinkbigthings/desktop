@@ -16,7 +16,6 @@ repositories {
 }
 
 dependencies {
-//    implementation 'org.openjfx:javafx:16'
 }
 
 javafx {
@@ -24,3 +23,29 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter:2.4.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.6.28'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+// use preview features
+tasks.withType(JavaCompile) {
+    options.compilerArgs += "--enable-preview"
+    // options.compilerArgs += "-Xlint:preview"
+    options.compilerArgs += "-Xlint:unchecked"
+    options.compilerArgs += "-Xlint:deprecation"
+}
+tasks.withType(Test) {
+    jvmArgs += "--enable-preview"
+}
+tasks.withType(JavaExec) {
+    jvmArgs += '--enable-preview'
+}

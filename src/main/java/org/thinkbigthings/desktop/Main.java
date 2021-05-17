@@ -1,12 +1,13 @@
 package org.thinkbigthings.desktop;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.application.Platform;
 import javafx.stage.Stage;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 
-import java.io.IOException;
-
+// TODO use DI, split application into Components
+// https://stackoverflow.com/questions/28804012/javafx-fxml-how-to-use-spring-di-with-nested-custom-controls/29777101
 
 // TODO use design pattern for app structure https://fxdocs.github.io/docs/html5/#_application_structure
 
@@ -14,21 +15,26 @@ import java.io.IOException;
 
 // TODO try scene builder
 
-// TODO Use modules https://edencoding.com/runtime-components-error/
+// TODO integration test with Robot
 
 public class Main extends Application {
 
+    private ConfigurableApplicationContext applicationContext;
+
     @Override
-    public void start(Stage stage) throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
-
-        stage.setScene(new Scene(loader.load()));
-        stage.show();
+    public void init() {
+        applicationContext = new SpringApplicationBuilder(Launcher.class).run();
     }
 
-    public static void main(String[] args) {
-        launch();
+    @Override
+    public void start(Stage stage) {
+        applicationContext.publishEvent(new StageReadyEvent(stage));
+    }
+
+    @Override
+    public void stop() {
+        applicationContext.close();
+        Platform.exit();
     }
 
 }
