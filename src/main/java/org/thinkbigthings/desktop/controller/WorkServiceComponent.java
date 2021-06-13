@@ -1,20 +1,9 @@
 package org.thinkbigthings.desktop.controller;
 
-import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
-import java.util.function.Consumer;
-
-
-public class WorkService extends Service<String> {
-
-    public WorkService(Consumer<String> finishingFunction) {
-
-        // this is called by the UI thread, replaces overriding of Service.succeeded()
-        setOnSucceeded((e) -> finishingFunction.accept(e.getSource().getValue().toString()));
-
-        setOnCancelled((e) -> finishingFunction.accept("Cancelled"));
-    }
+@org.springframework.stereotype.Service
+public class WorkServiceComponent extends javafx.concurrent.Service<String> {
 
     @Override
     protected void cancelled() {
@@ -33,15 +22,15 @@ public class WorkService extends Service<String> {
             }
 
             @Override
-            protected String call() throws Exception {
+            protected String call() {
 
                 // this is run in a background thread
                 // any update to the UI from this thread would need to use Platform.runLater()
 
                 this.updateProgress(0.0, 1.0);
 
-                long seconds = 10;
-                for (long i = 0; i < seconds; i++) {
+                long ms = 5_000;
+                for (long i = 0; i < ms; i++) {
                     if (isCancelled()) {
                         System.out.println("Cancelling...");
                         break;
@@ -51,7 +40,7 @@ public class WorkService extends Service<String> {
                     // to check the InterruptedException for cancellation.
                     // Interrupt acts on blocking calls on the thread
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(1);
                     } catch (InterruptedException interrupted) {
                         if (isCancelled()) {
                             System.out.println("Interrupted...");
@@ -59,7 +48,7 @@ public class WorkService extends Service<String> {
                         }
                     }
 
-                    this.updateProgress(i, seconds);
+                    this.updateProgress(i, ms);
                 }
 
                 this.updateProgress(1.0, 1.0);

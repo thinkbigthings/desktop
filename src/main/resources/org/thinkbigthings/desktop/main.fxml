@@ -1,49 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane minHeight="400" minWidth="600" prefHeight="400" prefWidth="600"
-            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.thinkbigthings.desktop.controller.MainController">
+<BorderPane minHeight="400" minWidth="600" prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.thinkbigthings.desktop.controller.MainController">
     <top>
         <VBox BorderPane.alignment="CENTER">
-            <children>
                 <HBox VBox.vgrow="ALWAYS">
                     <children>
                         <!-- useSystemMenuBar puts the menu at the top of the screen for Macs -->
-                        <MenuBar HBox.hgrow="ALWAYS" useSystemMenuBar="true">
+                        <MenuBar useSystemMenuBar="true" HBox.hgrow="ALWAYS">
                             <menus>
-                                <Menu id="fileMenu" mnemonicParsing="false" text="File" >
-                                    <MenuItem id="openMenuItem" fx:id="openMenuItem" mnemonicParsing="false" onAction="#clickOpenMenuItem" text="Open..."/>
+                                <Menu id="fileMenu" mnemonicParsing="false" text="File">
+                                    <MenuItem id="openMenuItem" fx:id="openMenuItem" mnemonicParsing="false" onAction="#clickOpenMenuItem" text="Open..." />
                                 </Menu>
-                                <Menu id="editMenu" mnemonicParsing="false" text="Edit" >
+                                <Menu id="editMenu" mnemonicParsing="false" text="Edit">
                                 </Menu>
-                                <Menu id="helpMenu" mnemonicParsing="false" text="Help" >
+                                <Menu id="helpMenu" mnemonicParsing="false" text="Help">
                                 </Menu>
                             </menus>
                         </MenuBar>
                     </children>
                 </HBox>
-                <Button id="workButton" fx:id="workButton" onAction="#clickWorkButton" text="Do Work..." />
-            </children>
         </VBox>
     </top>
     <center>
         <AnchorPane>
+         <children>
+            <GridPane layoutX="57.0" layoutY="114.0" prefHeight="117.0" prefWidth="343.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
             <children>
-                <TextArea></TextArea>
+                <Button id="workButton" fx:id="workButton" onAction="#clickWorkButton" prefHeight="28.0" prefWidth="172.0" text="Save File" GridPane.rowIndex="2" />
+                <Label alignment="CENTER" prefHeight="42.0" prefWidth="172.0" text="Number of Rows" />
+                <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="173.0" text="Destination File" GridPane.rowIndex="1" />
+                <TextField editable="false" prefHeight="39.0" prefWidth="98.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField prefHeight="42.0" prefWidth="171.0" GridPane.columnIndex="1" />
+                <ProgressBar id="progressBar" fx:id="progressBar" prefHeight="28.0" prefWidth="171.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </children>
-        </AnchorPane>
+            </GridPane>
+         </children></AnchorPane>
     </center>
     <bottom>
-        <HBox VBox.vgrow="ALWAYS" style="-fx-padding: 0 5 10 5;">
+        <HBox style="-fx-padding: 0 5 10 5;" VBox.vgrow="ALWAYS">
             <children>
                 <Region prefHeight="20.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                <ProgressBar id="progressBar" fx:id="progressBar" visible="false"/>
-                <Button id="cancelButton" fx:id="cancelButton" onAction="#clickCancelButton" text="X"></Button>
+                <Button id="cancelButton" fx:id="cancelButton" onAction="#clickCancelButton" text="X" />
             </children>
         </HBox>
     </bottom>
 </BorderPane>
-

@@ -1,11 +1,17 @@
 package org.thinkbigthings.desktop.controller;
 
-import javafx.concurrent.Service;
+import javafx.beans.value.ChangeListener;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 
 @Component
 public class MainController {
@@ -19,21 +25,41 @@ public class MainController {
     @FXML
     Button cancelButton;
 
-    Service<String> service;
+    private WorkServiceComponent service;
 
-    public MainController() {
+    private EventHandler<WorkerStateEvent> successHandler = event -> {
+        workButton.setDisable(false);
+        System.out.println(event.getSource().getValue().toString());
+    };
 
-        service = new WorkService(s -> {
-            workButton.setDisable(false);
-            System.out.println(s);
-        });
+    private EventHandler<WorkerStateEvent> cancelHandler = event -> {
+        workButton.setDisable(false);
+        System.out.println("Cancelled");
+    };
 
-        service.progressProperty().addListener((observable, oldValue, newValue) -> {
-            boolean running = newValue.doubleValue() < 1.0;
-            progressBar.setProgress(newValue.doubleValue());
-            progressBar.setVisible(running);
-            cancelButton.setVisible(running);
-        });
+    private ChangeListener<? super Number> progressListener = (observable, oldValue, newValue) -> {
+        boolean running = newValue.doubleValue() < 1.0;
+        progressBar.setProgress(newValue.doubleValue());
+        progressBar.setVisible(running);
+        cancelButton.setVisible(running);
+    };
+
+    public MainController(WorkServiceComponent workService) {
+        this.service = workService;
+    }
+
+    @PostConstruct
+    public void addListeners() {
+        service.setOnSucceeded(successHandler);
+        service.setOnCancelled(cancelHandler);
+        service.progressProperty().addListener(progressListener);
+    }
+
+    @PreDestroy
+    public void clearListeners() {
+        service.setOnSucceeded(null);
+        service.setOnCancelled(null);
+        service.progressProperty().removeListener(progressListener);
     }
 
     public void clickWorkButton(ActionEvent actionEvent) {
