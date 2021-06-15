@@ -1,7 +1,6 @@
 package org.thinkbigthings.desktop.controller;
 
 import javafx.beans.value.ChangeListener;
-import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,15 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-
 
 @Component
 public class MainController {
@@ -41,26 +32,6 @@ public class MainController {
 
     @FXML
     Button cancelButton;
-
-    // task vs service
-    // https://stackoverflow.com/questions/18880455/task-vs-service-for-database-operations
-
-    // JFX Service creates a ThreadPoolExecutor for you
-    // So if you create your own Tasks you need to manage your own thread pool
-    // generally should use the execute method inherited from Executor to run a Task
-
-    // Despite the similarity in name, a Spring Service is not like a JavaFX Service
-    // A Spring Service in a web app should be a stateless singleton and can be shared among the object graph
-    // (hence should be injected via dependency injection)
-    // A JavaFX Service, once you want to do anything that is parameterized, is stateful as described here
-    // see https://openjfx.io/javadoc/16/javafx.graphics/javafx/concurrent/Service.html
-    // and does not lend itself to dependency injection or to being shared among the object graph.
-    //
-    // It is more of a background task mechanism meant for a specific Controller.
-
-
-
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private Validator validator;
     private FileWriterService service;

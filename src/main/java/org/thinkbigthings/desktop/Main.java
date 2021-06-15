@@ -10,8 +10,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
 
-// TODO use DI file writing
-// write unit tests
+// TODO write unit tests, leverage DI
 
 // TODO split application into more UI components
 
