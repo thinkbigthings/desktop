@@ -9,9 +9,11 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
+
+// TODO use DI file writing
+// write unit tests
+
 // TODO split application into more UI components
-// use DI to show off how DI helps with the complexity
-// start unit tests
 
 // TODO use design pattern for app structure https://fxdocs.github.io/docs/html5/#_application_structure
 // do we need the <children> tags?

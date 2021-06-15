@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -51,22 +50,15 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             <children>
-                <Button id="workButton" fx:id="workButton" onAction="#clickWorkButton" prefHeight="28.0" prefWidth="172.0" text="Save File" GridPane.rowIndex="2" />
+                <Button id="saveButton" fx:id="saveButton" onAction="#clickSaveButton" prefHeight="28.0" prefWidth="172.0" text="Save File" GridPane.rowIndex="2" />
                 <Label alignment="CENTER" prefHeight="42.0" prefWidth="172.0" text="Number of Rows" />
-                <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="173.0" text="Destination File" GridPane.rowIndex="1" />
-                <TextField editable="false" prefHeight="39.0" prefWidth="98.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TextField prefHeight="42.0" prefWidth="171.0" GridPane.columnIndex="1" />
+                <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="173.0" text="Destination Folder" GridPane.rowIndex="1" />
+                <TextField id="destinationFileField" fx:id="destinationFolderField" editable="true" onKeyTyped="#onDestinationFolderKeyPress" prefHeight="39.0" prefWidth="98.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField id="numberRowsField" fx:id="numberRowsField" onKeyTyped="#onNumberRowsKeyPress" prefHeight="42.0" prefWidth="171.0" GridPane.columnIndex="1" />
                 <ProgressBar id="progressBar" fx:id="progressBar" prefHeight="28.0" prefWidth="171.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </children>
             </GridPane>
+                <Button id="cancelButton" fx:id="cancelButton" visible="false" layoutX="400.0" layoutY="193.0" onAction="#clickCancelButton" prefHeight="38.0" prefWidth="35.0" text="X" />
          </children></AnchorPane>
     </center>
-    <bottom>
-        <HBox style="-fx-padding: 0 5 10 5;" VBox.vgrow="ALWAYS">
-            <children>
-                <Region prefHeight="20.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                <Button id="cancelButton" fx:id="cancelButton" onAction="#clickCancelButton" text="X" />
-            </children>
-        </HBox>
-    </bottom>
 </BorderPane>
