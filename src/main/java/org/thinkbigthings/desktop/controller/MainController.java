@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.io.File;
 import java.nio.file.Paths;
 
 @Component
@@ -81,9 +82,9 @@ public class MainController {
 
         long numRows = Long.parseLong(numberRowsField.getText());
         String destFolder = destinationFolderField.getText();
-        String filename = Paths.get(destFolder, "data.csv").toFile().getAbsolutePath();
+        File file = Paths.get(destFolder, "data.csv").toFile();
 
-        service.setFilename(filename);
+        service.setFile(file);
         service.setNumLines(numRows);
         service.reset();
         service.start();

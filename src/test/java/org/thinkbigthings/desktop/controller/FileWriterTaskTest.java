@@ -15,7 +15,7 @@ class FileWriterTaskTest {
 
     private FileWriterService service;
 
-    private String tempFile;
+    private File tempFile;
     private long numLines;
 
     @BeforeAll
@@ -34,11 +34,11 @@ class FileWriterTaskTest {
     @BeforeEach
     public void setup() throws IOException {
 
-        tempFile = Files.createTempFile(Paths.get("build" ), "test.", ".txt").toAbsolutePath().toString();
+        tempFile = Files.createTempFile(Paths.get("build" ), "test.", ".txt").toFile();
         numLines = 100;
 
         service = new FileWriterService();
-        service.setFilename(tempFile);
+        service.setFile(tempFile);
         service.setNumLines(numLines);
     }
 
@@ -48,7 +48,7 @@ class FileWriterTaskTest {
 
         service.createTask().run();
 
-        List<String> lines = Files.readAllLines(new File(tempFile).toPath());
+        List<String> lines = Files.readAllLines(tempFile.toPath());
         assertEquals(numLines, lines.size());
     }
 }

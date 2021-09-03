@@ -1,6 +1,7 @@
 package org.thinkbigthings.desktop.controller;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
@@ -10,14 +11,14 @@ import java.util.function.Supplier;
 public class FileWriterTaskCallable implements TaskCallable<Void> {
 
     private long taskNumLines;
-    private String taskFilename;
+    private File taskFile;
 
     private Supplier<Boolean> cancelledStatus = () -> false;
     private BiConsumer<Long, Long> progressStatus = (a, b) -> {};
 
-    public FileWriterTaskCallable(long taskNumLines, String taskFilename) {
+    public FileWriterTaskCallable(long taskNumLines, File taskFile) {
         this.taskNumLines = taskNumLines;
-        this.taskFilename = taskFilename;
+        this.taskFile = taskFile;
     }
 
     @Override
@@ -34,8 +35,8 @@ public class FileWriterTaskCallable implements TaskCallable<Void> {
         return taskNumLines;
     }
 
-    public String getTaskFilename() {
-        return taskFilename;
+    public File getTaskFile() {
+        return taskFile;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class FileWriterTaskCallable implements TaskCallable<Void> {
         Random random = new Random();
 
         // Task is supposed to throw an exception if a result could not be reached
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(taskFilename))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(taskFile))) {
             for (long i = 0; i < taskNumLines; i++) {
                 if (cancelledStatus.get()) {
                     System.out.println("Cancelling...");

@@ -19,7 +19,7 @@ class FileWriterTaskCallableTest {
     @BeforeEach
     public void setup() throws IOException {
 
-        String tempFile = Files.createTempFile(Paths.get("build" ), "test.", ".txt").toAbsolutePath().toString();
+        File tempFile = Files.createTempFile(Paths.get("build" ), "test.", ".txt").toFile();
         writer = new FileWriterTaskCallable(100, tempFile);
     }
 
@@ -29,7 +29,7 @@ class FileWriterTaskCallableTest {
 
         writer.call();
 
-        List<String> lines = Files.readAllLines(new File(writer.getTaskFilename()).toPath());
+        List<String> lines = Files.readAllLines(writer.getTaskFile().toPath());
         assertEquals(writer.getTaskNumLines(), lines.size());
     }
 }
